@@ -1,25 +1,55 @@
 {{define "content"}}
-<div class="container marketing">
-    <h3 class="text-center mb-4">DNS CName Entries</h3>
-    <table class="table table-striped text-center">
-        <thead>
-        <tr>
-            <th>Hostname</th>
-            <th>Target</th>
-            <th>TTL</th>
-            <th><button class="addCName btn btn-primary">Add CName Entry</button></th>
-        </tr>
-        </thead>
-        <tbody>
-        {{range .cnames}}
-        <tr>
-            <td>{{.Hostname}}.{{.Target.Domain}}</td>
-            <td>{{.Target.Hostname}}.{{.Target.Domain}}</td>
-            <td>{{.Ttl}}</td>
-            <td><button id="{{.ID}}" class="deleteCName btn btn-outline-secondary btn-sm"><img src="/static/icons/trash.svg" alt="" width="16" height="16" title="Delete"></button></td>
-        </tr>
-        {{end}}
-        </tbody>
-    </table>
+<div class="page__head">
+    <div>
+        <span class="eyebrow">CNAME records</span>
+        <h1 class="page__title">Alias entries</h1>
+    </div>
+    <div class="page__head-actions" style="display:flex;align-items:center;gap:1rem;">
+        <span class="page__count">{{len .cnames}} alias{{if ne (len .cnames) 1}}es{{end}}</span>
+        <button class="addCName btn btn--primary" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Add CNAME
+        </button>
+    </div>
+</div>
+
+<div class="panel">
+    <div class="table-scroll">
+        <table class="data">
+            <thead>
+            <tr>
+                <th>Alias</th>
+                <th>Points to</th>
+                <th>TTL</th>
+                <th class="col-actions">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{range .cnames}}
+            <tr>
+                <td class="fqdn"><span class="host">{{.Hostname}}</span><span class="muted">.{{.Target.Domain}}</span></td>
+                <td class="fqdn muted">{{.Target.Hostname}}.{{.Target.Domain}}</td>
+                <td><span class="tag">{{.Ttl}}s</span></td>
+                <td class="col-actions">
+                    <div class="row-actions">
+                        <button class="deleteCName act act--danger" type="button" data-id="{{.ID}}" title="Delete" aria-label="Delete alias">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 011-1h6a1 1 0 011 1v2m2 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="4">
+                    <div class="empty">
+                        <div class="empty__title">No aliases yet</div>
+                        <div>Create a CNAME to point another name at one of your hosts.</div>
+                    </div>
+                </td>
+            </tr>
+            {{end}}
+            </tbody>
+        </table>
+    </div>
 </div>
 {{end}}

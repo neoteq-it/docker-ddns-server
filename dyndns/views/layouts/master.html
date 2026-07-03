@@ -3,64 +3,72 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="/static/icons/favicon.ico">
+    <meta name="description" content="NEOTEQ dynamic DNS management console">
+    <meta name="author" content="NEOTEQ">
+    <meta name="color-scheme" content="light dark">
+    <link rel="icon" type="image/svg+xml" href="/static/icons/icon.svg">
+    <link rel="alternate icon" href="/static/icons/favicon.ico">
 
     <title>{{.title}}</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/neoteq.css">
 
-    <!-- JQueryUI base CSS -->
-    <link rel="stylesheet" href="/static/css/jquery-ui.min.css"/>
-
-    <!-- Custom styles for this template -->
-    <link href="/static/css/narrow-jumbotron.css" rel="stylesheet">
+    <!-- Apply the saved theme before first paint to avoid a flash -->
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem("neoteq-theme");
+                if (t) document.documentElement.setAttribute("data-theme", t);
+            } catch (e) {}
+        })();
+    </script>
 </head>
 
 <body>
 
-<div class="container">
-    <!-- Navigation -->
-    <div class="header clearfix">
-        <nav>
-            <ul class="nav nav-pills float-right">
-                <li class="nav-item">
-                    <a class="nav-link nav-hosts" href="/admin/hosts">Hosts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-cnames" href="/admin/cnames">CNames</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-logs" href="/admin/logs">Logs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-logout" href="/admin/logout" id="logout">Logout</a>
-                </li>
-            </ul>
+<header class="topbar">
+    <div class="topbar__inner">
+        <a class="brand" href="/admin/hosts">
+            <span class="brand__mark" aria-hidden="true">
+                <img src="/static/icons/icon.svg" alt="" width="20" height="20">
+            </span>
+            <span class="brand__name">{{.title}}</span>
+        </a>
+
+        <span class="status" title="Name server is running">
+            <span class="status__dot"></span>online
+        </span>
+
+        <span class="topbar__spacer"></span>
+
+        <nav class="nav" aria-label="Primary">
+            <a class="nav-link nav-hosts" href="/admin/hosts">Hosts</a>
+            <a class="nav-link nav-cnames" href="/admin/cnames">CNames</a>
+            <a class="nav-link nav-logs" href="/admin/logs">Logs</a>
+            <a class="nav-link nav-logout" href="/admin/logout" id="logout">Logout</a>
         </nav>
-        <h3 class="text-muted">{{.title}}</h3>
+
+        <button type="button" class="icon-btn theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+            <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+            </svg>
+            <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"></path>
+            </svg>
+        </button>
     </div>
+    <div class="signal-rule" aria-hidden="true"></div>
+</header>
 
-    <!-- Page Content -->
+<main class="page">
     {{template "content" .}}
+</main>
 
-    <footer class="footer">
-        <p>&copy; {{.title}} {{year}}</p>
-    </footer>
+<footer class="footer">
+    <span>{{.title}}</span> &middot; &copy; {{year}} &middot; dynamic DNS console
+</footer>
 
-</div> <!-- /container -->
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="/static/js/jquery-3.4.1.min.js"></script>
-<!-- popper.js@1.16.0 -->
-<script src="/static/js/popper.min.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
-<script src="/static/js/jquery-ui.min.js"></script>
-<script src="/static/js/actions-1.0.0.js"></script>
+<script src="/static/js/actions.js"></script>
 </body>
 </html>

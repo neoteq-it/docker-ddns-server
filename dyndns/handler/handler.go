@@ -119,7 +119,7 @@ func (h *Handler) ParseEnvs() (adminAuth bool, err error) {
 	var ok bool
 	h.Title, ok = os.LookupEnv("DDNS_TITLE")
 	if !ok {
-		h.Title = "TheBBCloud DynDNS"
+		h.Title = "NEOTEQ DynDNS"
 	}
 	allowWildcard, ok := os.LookupEnv("DDNS_ALLOW_WILDCARD")
 	if ok {

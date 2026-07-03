@@ -1,29 +1,47 @@
 {{define "content"}}
-    <div class="container marketing">
-        <h3 class="text-center mb-4">Log Entries</h3>
-        <table class="table table-striped text-center" style="font-size: 14px">
+<div class="page__head">
+    <div>
+        <span class="eyebrow">Telemetry</span>
+        <h1 class="page__title">Update log</h1>
+    </div>
+    <span class="page__count">{{len .logs}} event{{if ne (len .logs) 1}}s{{end}}</span>
+</div>
+
+<div class="panel">
+    <div class="table-scroll">
+        <table class="data">
             <thead>
             <tr>
                 <th>Status</th>
                 <th>Hostname</th>
                 <th>IP sent</th>
                 <th>Timestamp</th>
-                <th>User Agent</th>
+                <th>User agent</th>
                 <th>Caller IP</th>
             </tr>
             </thead>
             <tbody>
             {{range .logs}}
-                <tr class="errorTooltip" title="<b>{{if .Status}}Successful{{else}}Failed{{end}}</b><br>{{.Message}}">
-                    <td class="align-middle mx-auto"><div class="{{if .Status}}bg-success{{else}}bg-danger{{end}}" style="width: 16px; height: 16px; margin: auto"></div></td>
-                    <td>{{.Host.Hostname}}.{{.Host.Domain}}</td>
-                    <td>{{.SentIP}}</td>
-                    <td>{{.CreatedAt.Format "01/02/2006 15:04"}}</td>
-                    <td>{{.UserAgent}}</td>
-                    <td>{{.CallerIP}}</td>
-                </tr>
+            <tr class="has-tip" data-tip="<b>{{if .Status}}Successful{{else}}Failed{{end}}</b><br>{{.Message}}">
+                <td><span class="led {{if .Status}}led--ok{{else}}led--fail{{end}}"></span></td>
+                <td class="fqdn">{{.Host.Hostname}}.{{.Host.Domain}}</td>
+                <td class="mono">{{if .SentIP}}{{.SentIP}}{{else}}<span class="muted">—</span>{{end}}</td>
+                <td class="mono muted">{{.CreatedAt.Format "2006-01-02 15:04"}}</td>
+                <td class="muted">{{.UserAgent}}</td>
+                <td class="mono muted">{{.CallerIP}}</td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="6">
+                    <div class="empty">
+                        <div class="empty__title">No log entries</div>
+                        <div>Update events from your hosts will appear here.</div>
+                    </div>
+                </td>
+            </tr>
             {{end}}
             </tbody>
         </table>
     </div>
+</div>
 {{end}}

@@ -48,7 +48,7 @@ func UpdateRecord(hostname string, target string, addrType string, zone string, 
 	}
 
 	if out.String() != "" {
-		return fmt.Errorf(out.String())
+		return fmt.Errorf("%s", out.String())
 	}
 
 	return nil
@@ -88,7 +88,7 @@ func DeleteRecord(hostname string, zone string, enableWildcard bool) error {
 	}
 
 	if out.String() != "" {
-		return fmt.Errorf(out.String())
+		return fmt.Errorf("%s", out.String())
 	}
 
 	return nil

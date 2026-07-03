@@ -1,4 +1,4 @@
-FROM golang:1.22 as builder
+FROM golang:1.25 AS builder
 
 ENV GO111MODULE=on
 ENV GOPATH=/root/go
